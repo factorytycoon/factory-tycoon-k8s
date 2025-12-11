@@ -20,3 +20,10 @@ spec:
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
+          env:
+            - name: MARIADB_URL
+              value: "jdbc:mysql://175.114.229.158:3306/factory-tycoon"
+            - name: MARIADB_USERNAME
+              value: "user"
+            - name: MARIADB_PASSWORD
+              value: "1234"
