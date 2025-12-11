@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sf-backend
+  labels:
+    app: sf-backend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: sf-backend
+  template:
+    metadata:
+      labels:
+        app: sf-backend
+    spec:
+      containers:
+        - name: sf-backend
+          image: 613307913976.dkr.ecr.ap-northeast-2.amazonaws.com/sf-backend:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080

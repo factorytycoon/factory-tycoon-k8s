@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fe-deployment
+  namespace: factory-fe
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fe
+  template:
+    metadata:
+      labels:
+        app: fe
+    spec:
+      nodeSelector:
+        role: frontend
+      containers:
+        - name: fe
+          image: nginx   # 임시 이미지. 나중에 FE Docker 이미지로 변경
+          ports:
+            - containerPort: 3000
