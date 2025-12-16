@@ -17,6 +17,6 @@ spec:
         role: frontend
       containers:
         - name: fe
-          image: nginx   # 임시 이미지. 나중에 FE Docker 이미지로 변경
+          image: nginx   
           ports:
             - containerPort: 3000

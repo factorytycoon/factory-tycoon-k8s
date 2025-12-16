@@ -14,6 +14,8 @@ spec:
       labels:
         app: sf-backend
     spec:
+      nodeSelector:
+        role: backend
       containers:
         - name: sf-backend
           image: 613307913976.dkr.ecr.ap-northeast-2.amazonaws.com/sf-backend:4710343a873dd115cd123955595be6681cca6521
