@@ -23,13 +23,26 @@ spec:
           ports:
             - containerPort: 8081
           env:
-            - name: MARIADB_URL
-              value: "jdbc:mysql://175.114.229.158:3306/factory-tycoon"
-            - name: MARIADB_USERNAME
-              value: "user"
-            - name: MARIADB_PASSWORD
-              value: "1234"
             - name: AWS_REGION
               value: ap-northeast-2
+              
             - name: AWS_DEFAULT_REGION
               value: ap-northeast-2
+              
+            - name: AWS_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: glb-aws-secret
+                  key: AWS_ACCESS_KEY_ID
+
+            - name: AWS_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: glb-aws-secret
+                  key: AWS_SECRET_ACCESS_KEY
+
+            - name: AWS_BUCKET
+              valueFrom:
+                secretKeyRef:
+                  name: glb-aws-secret
+                  key: AWS_BUCKET
