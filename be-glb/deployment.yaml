@@ -29,3 +29,7 @@ spec:
               value: "user"
             - name: MARIADB_PASSWORD
               value: "1234"
+            - name: AWS_REGION
+              value: ap-northeast-2
+            - name: AWS_DEFAULT_REGION
+              value: ap-northeast-2
