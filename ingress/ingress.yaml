@@ -2,7 +2,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: factory-ingress
-  namespace: factory
+  namespace: default
   annotations:
     kubernetes.io/ingress.class: alb
     alb.ingress.kubernetes.io/scheme: internet-facing
@@ -11,17 +11,18 @@ spec:
   rules:
     - http:
         paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: fe-service
-                port:
-                  number: 3000
           - path: /api
             pathType: Prefix
             backend:
               service:
-                name: be-service
+                name: sf-backend
                 port:
                   number: 8080
+
+          - path: /glb
+            pathType: Prefix
+            backend:
+              service:
+                name: sf-backend-glb
+                port:
+                  number: 8081
