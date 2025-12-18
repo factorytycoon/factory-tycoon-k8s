@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sf-backend-glb
+  labels:
+    app: sf-backend-glb
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: sf-backend-glb
+  template:
+    metadata:
+      labels:
+        app: sf-backend-glb
+    spec:
+      nodeSelector:
+        role: backend
+      containers:
+        - name: sf-backend-glb
+          image: 613307913976.dkr.ecr.ap-northeast-2.amazonaws.com/sf-backend-glb:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8081
+          env:
+            - name: MARIADB_URL
+              value: "jdbc:mysql://175.114.229.158:3306/factory-tycoon"
+            - name: MARIADB_USERNAME
+              value: "user"
+            - name: MARIADB_PASSWORD
+              value: "1234"
