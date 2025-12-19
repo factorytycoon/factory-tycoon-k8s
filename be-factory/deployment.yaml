@@ -33,3 +33,16 @@ spec:
               value: ap-northeast-2
             - name: AWS_DEFAULT_REGION
               value: ap-northeast-2
+            - name: REDIS_HOST
+              value: "175.114.229.158"
+            - name: REDIS_PORT
+              value: "6379"
+            - name: REDIS_PASSWORD
+              value: "pass"
+            - name: JWT_SECRET_KEY
+              value: "your-secret-key-change-this-in-production-min-256-bits"
+            - name: JWT_ACCESS_TTL_MS
+              value: "3600000"
+            - name: JWT_REFRESH_TTL_MS
+              value: "86400000"
+            
