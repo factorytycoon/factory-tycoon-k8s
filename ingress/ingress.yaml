@@ -6,6 +6,9 @@ metadata:
   annotations:
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/target-type: ip
+    # TLS 비활성화: ACM 미보유로 ssl-redirect 비활성화
+    alb.ingress.kubernetes.io/ssl-redirect: "false"
+    alb.ingress.kubernetes.io/backend-protocol: "HTTP"
 spec:
   ingressClassName: alb
   rules:
