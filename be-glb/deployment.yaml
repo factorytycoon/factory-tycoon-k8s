@@ -24,19 +24,22 @@ spec:
           ports:
             - containerPort: 8081
           env:
+            - name: SERVER_PORT
+              value: "8081"
+              
             - name: AWS_REGION
               value: ap-northeast-2
               
             - name: AWS_DEFAULT_REGION
               value: ap-northeast-2
               
-            - name: AWS_ACCESS_KEY_ID
+            - name: AWS_ACCESS_KEY
               valueFrom:
                 secretKeyRef:
                   name: glb-aws-secret
                   key: AWS_ACCESS_KEY_ID
 
-            - name: AWS_SECRET_ACCESS_KEY
+            - name: AWS_SECRET_KEY
               valueFrom:
                 secretKeyRef:
                   name: glb-aws-secret
