@@ -23,30 +23,39 @@ spec:
           imagePullPolicy: Always
           ports:
             - containerPort: 8081
-          env:
-            - name: SERVER_PORT
-              value: "8081"
+          envFrom:
+            - secretRef:
+                name: sf-backend-glb-secrets
+            - configMapRef:
+                name: sf-backend-glb-config
+                
+          # env:
+          
+          # ------------------ configmanp ref 로 대체 ------------------
+          #   - name: SERVER_PORT
+          #     value: "8081"
 
-            - name: AWS_REGION
-              value: ap-northeast-2
+          #   - name: AWS_REGION
+          #     value: ap-northeast-2
+          # -----------------------------------------------------------
               
-            - name: AWS_DEFAULT_REGION
-              value: ap-northeast-2
               
-            - name: AWS_ACCESS_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: glb-aws-secret
-                  key: AWS_ACCESS_KEY_ID
+          # ------------------- secret ref 로 대체 ------------------
+            # - name: AWS_ACCESS_KEY
+            #   valueFrom:
+            #     secretKeyRef:
+            #       name: glb-aws-secret
+            #       key: AWS_ACCESS_KEY_ID
 
-            - name: AWS_SECRET_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: glb-aws-secret
-                  key: AWS_SECRET_ACCESS_KEY
+            # - name: AWS_SECRET_KEY
+            #   valueFrom:
+            #     secretKeyRef:
+            #       name: glb-aws-secret
+            #       key: AWS_SECRET_ACCESS_KEY
 
-            - name: AWS_BUCKET
-              valueFrom:
-                secretKeyRef:
-                  name: glb-aws-secret
-                  key: AWS_BUCKET
+            # - name: AWS_BUCKET
+            #   valueFrom:
+            #     secretKeyRef:
+            #       name: glb-aws-secret
+            #       key: AWS_BUCKET
+          # -----------------------------------------------------------
