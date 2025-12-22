@@ -28,29 +28,3 @@ spec:
             - configMapRef:
                 name: sf-backend-config
                 
-          # env:
-          # ------------------ secret ref 로 대체 ------------------
-          #   - name: MARIADB_URL
-          #     value: "jdbc:mysql://175.114.229.158:3306/factory-tycoon2"
-          #   - name: MARIADB_USERNAME
-          #     value: "root"
-          #   - name: MARIADB_PASSWORD
-          #     value: "pass"
-          #   - name: REDIS_HOST
-          #     value: "175.114.229.158"
-          #   - name: REDIS_PASSWORD
-          #     value: "pass"
-          #   - name: JWT_SECRET_KEY
-          #     value: "your-secret-key-change-this-in-production-min-256-bits"
-          # --------------------------------------------------------
-          
-          # ------------------ configmanp ref 로 대체 ------------------  
-          #   - name: JWT_ACCESS_TTL_MS
-          #     value: "3600000"
-          #   - name: JWT_REFRESH_TTL_MS
-          #     value: "86400000"
-          #   - name: AWS_REGION
-          #     value: ap-northeast-2
-          #   - name: REDIS_PORT
-          #     value: "6379"
-          # -----------------------------------------------------------
