@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: sensor-ws-deploy
+  name: sensor-ws
   namespace: default # 필요하다면 프로젝트 네임스페이스로 변경
   labels:
     app: sensor-ws
@@ -16,7 +16,7 @@ spec:
         app: sensor-ws
     spec:
       containers:
-        - name: sensor-ws-container
+        - name: sensor-ws
           # ⚠️ 아래 주소는 아까 만든 님의 ECR 이미지 주소로 꼭 바꿔주세요!
           image: 613307913976.dkr.ecr.ap-northeast-2.amazonaws.com/sensor-server:latest
           ports:
