@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sf-backend-websocket
+  labels:
+    app: sf-backend-websocket
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: sf-backend-websocket
+  template:
+    metadata:
+      labels:
+        app: sf-backend-websocket
+    spec:
+      nodeSelector:
+        role: backend
+      containers:
+        - name: sf-backend-websocket
+          image: 613307913976.dkr.ecr.ap-northeast-2.amazonaws.com/sf-backend-websocket:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8000
+          envFrom:
+            - secretRef:
+                name: sf-backend-websocket-secrets

@@ -27,3 +27,10 @@ spec:
                 name: sf-backend-glb
                 port:
                   number: 8081
+          - path: /ws
+            pathType: Prefix
+            backend:
+              service:
+                name: sf-backend-websocket
+                port:
+                  number: 8000
