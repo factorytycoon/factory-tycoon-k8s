@@ -21,6 +21,19 @@ spec:
           image: 613307913976.dkr.ecr.ap-northeast-2.amazonaws.com/sensor-server:latest
           ports:
             - containerPort: 8000
+          # 👇 쿠버네티스 자체 헬스 체크 추가 (Ingress 설정과 맞춤)
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 10
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 15
+            periodSeconds: 10
           env:
             - name: REDIS_HOST
               # ⚠️ ElastiCache 주소 입력
