@@ -18,7 +18,7 @@ spec:
         role: backend
       containers:
         - name: sf-backend-websocket
-          image: 613307913976.dkr.ecr.ap-northeast-2.amazonaws.com/sf-backend-websocket:b4b4348a445820ea262b44f847bcace41eaff8da
+          image: 613307913976.dkr.ecr.ap-northeast-2.amazonaws.com/sf-backend-websocket:53beeacd3955b392d1e5d861152ce610479cf109
           imagePullPolicy: Always
           ports:
             - containerPort: 8000
