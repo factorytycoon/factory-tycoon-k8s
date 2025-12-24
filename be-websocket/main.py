@@ -16,7 +16,7 @@ app.add_middleware(
 
 # 환경변수 받기 (EKS deployment.yaml에서 설정함)
 REDIS_HOST = os.getenv("REDIS_HOST", "localhost")
-REDIS_CHANNEL = "sensor_data"
+REDIS_CHANNEL = "pending:mongodb_stream"
 
 @app.get("/health")
 def health_check():
