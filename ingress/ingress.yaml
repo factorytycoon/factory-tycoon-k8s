@@ -8,11 +8,21 @@ metadata:
     alb.ingress.kubernetes.io/target-type: ip
     # TLS 비활성화: ACM 미보유로 ssl-redirect 비활성화
     alb.ingress.kubernetes.io/backend-protocol: "HTTP"
+
+    # [중요 추가] WebSocket 연결 유지 설정
+    # AWS ALB는 기본적으로 60초 동안 데이터가 없으면 연결을 끊습니다.
+    # 이를 4000초(약 1시간)로 늘려서 WebSocket이 자주 끊기는 것을 방지합니다.
+    alb.ingress.kubernetes.io/load-balancer-attributes: idle_timeout.timeout_seconds=4000
+
+    alb.ingress.kubernetes.io/healthcheck-path: "/health"
+    alb.ingress.kubernetes.io/healthcheck-protocol: HTTP
+
 spec:
   ingressClassName: alb
   rules:
     - http:
         paths:
+          # 기존 백엔드 API
           - path: /api
             pathType: Prefix
             backend:
@@ -20,6 +30,8 @@ spec:
                 name: sf-backend
                 port:
                   number: 8080
+
+          # 기존 GLB 서비스
           - path: /glb
             pathType: Prefix
             backend:
@@ -27,3 +39,15 @@ spec:
                 name: sf-backend-glb
                 port:
                   number: 8081
+
+          # [여기 추가] WebSocket 서비스 경로
+          # Frontend에서 ws://주소/ws 로 접속하게 됩니다.
+          - path: /ws
+            pathType: Prefix
+            backend:
+              service:
+                # ⚠️ 주의: be-websocket/service.yaml에 작성한 metadata.name과 똑같아야 합니다.
+                # 아까 제안드린 이름은 'sensor-ws-svc' 였습니다.
+                name: sensor-ws-svc
+                port:
+                  number: 80

@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sensor-ws-deploy
+  namespace: default # 필요하다면 프로젝트 네임스페이스로 변경
+  labels:
+    app: sensor-ws
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: sensor-ws
+  template:
+    metadata:
+      labels:
+        app: sensor-ws
+    spec:
+      containers:
+        - name: sensor-ws-container
+          # ⚠️ 아래 주소는 아까 만든 님의 ECR 이미지 주소로 꼭 바꿔주세요!
+          image: 613307913976.dkr.ecr.ap-northeast-2.amazonaws.com/sensor-server:latest
+          ports:
+            - containerPort: 8000
+          env:
+            - name: REDIS_HOST
+              # ⚠️ ElastiCache 주소 입력
+              value: "ft-redis.wgonml.ng.0001.apn2.cache.amazonaws.com"
