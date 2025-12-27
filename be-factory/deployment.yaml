@@ -18,7 +18,7 @@ spec:
         role: backend
       containers:
         - name: sf-backend
-          image: 613307913976.dkr.ecr.ap-northeast-2.amazonaws.com/sf-backend:1c87863f19c08c25ce7e2b149cefd3b9d90f979a
+          image: 613307913976.dkr.ecr.ap-northeast-2.amazonaws.com/sf-backend:e29af4aec1efcc2964d41937a1015a5a2c15d3e9
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
