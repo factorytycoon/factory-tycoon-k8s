@@ -1,31 +1,31 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: sf-backend-glb
+  name: sf-backend-aws
   labels:
-    app: sf-backend-glb
+    app: sf-backend-aws
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: sf-backend-glb
+      app: sf-backend-aws
   template:
     metadata:
       labels:
-        app: sf-backend-glb
+        app: sf-backend-aws
     spec:
       nodeSelector:
         role: backend
-      serviceAccountName: sf-backend-glb-sa
+      serviceAccountName: sf-backend-aws-sa
       containers:
-        - name: sf-backend-glb
-          image: 613307913976.dkr.ecr.ap-northeast-2.amazonaws.com/sf-backend-glb:latest
+        - name: sf-backend-aws
+          image: 613307913976.dkr.ecr.ap-northeast-2.amazonaws.com/sf-backend-aws:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 8081
           envFrom:
             - secretRef:
-                name: sf-backend-glb-secrets
+                name: sf-backend-aws-secrets
             - configMapRef:
-                name: sf-backend-glb-config
+                name: sf-backend-aws-config
                 

@@ -20,11 +20,11 @@ spec:
                 name: sf-backend
                 port:
                   number: 8080
-          - path: /glb
+          - path: /aws
             pathType: Prefix
             backend:
               service:
-                name: sf-backend-glb
+                name: sf-backend-aws
                 port:
                   number: 8081
           - path: /ws
