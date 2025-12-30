@@ -19,7 +19,7 @@ spec:
       serviceAccountName: sf-backend-aws-sa
       containers:
         - name: sf-backend-aws
-          image: 613307913976.dkr.ecr.ap-northeast-2.amazonaws.com/sf-backend-aws:cda378a2e391412a0c8d3efb9890efdcc47e9476
+          image: 613307913976.dkr.ecr.ap-northeast-2.amazonaws.com/sf-backend-aws:d6ae333bbe49bc8bc5a0315612ebbf175f65037a
           imagePullPolicy: Always
           ports:
             - containerPort: 8081
