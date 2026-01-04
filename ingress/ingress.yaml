@@ -17,20 +17,20 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: sf-backend
+                name: factory-tycoon-backend
                 port:
                   number: 8080
           - path: /aws
             pathType: Prefix
             backend:
               service:
-                name: sf-backend-aws
+                name: factory-tycoon-aws
                 port:
                   number: 8081
           - path: /ws
             pathType: Prefix
             backend:
               service:
-                name: sf-backend-websocket
+                name: factory-tycoon-websocket
                 port:
                   number: 8000
