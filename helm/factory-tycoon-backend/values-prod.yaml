@@ -2,7 +2,7 @@
 replicaCount: 2
 
 image:
-  tag: "b411b27cd6257bc5e07a2dcdfde0961d48b2f9dc"  # 현재 태그로 업데이트
+  tag: "a190a6b208263c19cb1f09a857761357b6e888e5"
 
 # ConfigMap and Secret are managed by Terraform
 configMap:
