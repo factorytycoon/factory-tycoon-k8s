@@ -1,0 +1,74 @@
+# Default values for factory-tycoon-backend
+# This is a YAML-formatted file for Helm
+
+replicaCount: 2
+
+image:
+  repository: 613307913976.dkr.ecr.ap-northeast-2.amazonaws.com/sf-backend
+  pullPolicy: Always
+  # tag: override this in environment-specific values files
+  tag: "latest"
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+service:
+  type: ClusterIP
+  port: 8080
+  targetPort: 8080
+  name: sf-backend
+
+nodeSelector:
+  role: backend
+
+# Environment variables from ConfigMap and Secret
+# Note: ConfigMap and Secret are managed by Terraform (argocd/configmaps.tf & secrets.tf)
+# Helm only references them, doesn't create them
+configMap:
+  enabled: false  # Managed by Terraform
+  name: sf-backend-config
+  data:
+    JWT_ACCESS_TTL_MS: "3600000"
+    JWT_REFRESH_TTL_MS: "86400000"
+    AWS_REGION: "ap-northeast-2"
+    REDIS_PORT: "6379"
+
+secret:
+  enabled: false  # Managed by Terraform
+  name: sf-backend-secrets
+  # These should be injected via Terraform or external secret management
+  # data:
+  #   MARIADB_URL: ""
+  #   MARIADB_USERNAME: ""
+  #   MARIADB_PASSWORD: ""
+  #   REDIS_HOST: ""
+  #   JWT_SECRET_KEY: ""
+
+resources:
+  limits:
+    cpu: 500m
+    memory: 512Mi
+  requests:
+    cpu: 250m
+    memory: 256Mi
+
+autoscaling:
+  enabled: false
+  minReplicas: 2
+  maxReplicas: 5
+  targetCPUUtilizationPercentage: 80
+
+livenessProbe:
+  httpGet:
+    path: /actuator/health
+    port: 8080
+  initialDelaySeconds: 30
+  periodSeconds: 10
+
+readinessProbe:
+  httpGet:
+    path: /actuator/health
+    port: 8080
+  initialDelaySeconds: 20
+  periodSeconds: 5

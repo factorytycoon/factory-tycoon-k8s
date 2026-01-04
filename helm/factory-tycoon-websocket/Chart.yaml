@@ -1,0 +1,11 @@
+apiVersion: v2
+name: factory-tycoon-websocket
+description: A Helm chart for Factory Tycoon WebSocket Service
+type: application
+version: 1.0.0
+appVersion: "1.0"
+maintainers:
+  - name: LGCNS
+keywords:
+  - factory-tycoon
+  - websocket

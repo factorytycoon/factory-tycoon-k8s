@@ -1,0 +1,12 @@
+apiVersion: v2
+name: factory-tycoon-aws
+description: A Helm chart for Factory Tycoon AWS Service
+type: application
+version: 1.0.0
+appVersion: "1.0"
+maintainers:
+  - name: LGCNS
+keywords:
+  - factory-tycoon
+  - backend
+  - aws

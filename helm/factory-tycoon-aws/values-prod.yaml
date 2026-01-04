@@ -1,0 +1,23 @@
+# Values for Production environment
+replicaCount: 2
+
+image:
+  tag: "a3df7a796f8403fe343b465edeed36053a0b3cd8"
+
+# ConfigMap and Secret are managed by Terraform
+configMap:
+  enabled: false
+
+resources:
+  limits:
+    cpu: 1000m
+    memory: 1Gi
+  requests:
+    cpu: 500m
+    memory: 512Mi
+
+autoscaling:
+  enabled: true
+  minReplicas: 2
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 80
