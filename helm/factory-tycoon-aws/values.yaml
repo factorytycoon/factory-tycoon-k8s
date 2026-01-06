@@ -69,3 +69,9 @@ readinessProbe:
     port: 8081
   initialDelaySeconds: 20
   periodSeconds: 5
+# OpenSearch Security Setup (initContainer)
+initContainers:
+  opensearch-security-setup:
+    enabled: true
+    image: curlimages/curl:latest
+    irsaRoleArn: "arn:aws:iam::613307913976:role/sf-backend-aws-irsa"

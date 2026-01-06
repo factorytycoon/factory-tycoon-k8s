@@ -25,6 +25,70 @@ spec:
       nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      {{- if .Values.initContainers.opensearch-security-setup.enabled }}
+      initContainers:
+        - name: opensearch-security-setup
+          image: {{ .Values.initContainers.opensearch-security-setup.image }}
+          env:
+            - name: IRSA_ROLE_ARN
+              value: {{ .Values.initContainers.opensearch-security-setup.irsaRoleArn | quote }}
+          envFrom:
+            - secretRef:
+                name: {{ .Values.secret.name }}
+          command:
+            - /bin/sh
+            - -c
+            - |
+              #!/bin/sh
+              set -e
+              
+              echo "Starting OpenSearch security setup..."
+              
+              # Install required tools
+              apk add --no-cache curl jq aws-cli bash
+              
+              ENDPOINT="https://${OPENSEARCH_ENDPOINT}"
+              ROLE_NAME="sensor-data-reader"
+              AWS_REGION="${AWS_REGION:-ap-northeast-2}"
+              
+              # Get AWS credentials from IMDSv2 (provided by IRSA)
+              echo "Acquiring AWS credentials via IRSA..."
+              TOKEN=$(curl -X PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-metadata-token-ttl-seconds: 21600" 2>/dev/null)
+              CREDS=$(curl -H "X-aws-ec2-metadata-token: ${TOKEN}" \
+                http://169.254.169.254/latest/meta-data/iam/security-credentials/$(curl -H "X-aws-ec2-metadata-token: ${TOKEN}" http://169.254.169.254/latest/meta-data/iam/security-credentials/ 2>/dev/null) 2>/dev/null)
+              
+              export AWS_ACCESS_KEY_ID=$(echo ${CREDS} | jq -r '.AccessKeyId')
+              export AWS_SECRET_ACCESS_KEY=$(echo ${CREDS} | jq -r '.SecretAccessKey')
+              export AWS_SESSION_TOKEN=$(echo ${CREDS} | jq -r '.Token')
+              
+              echo "Creating sensor-data-reader role..."
+              
+              # Create the role
+              curl -X PUT "${ENDPOINT}/_plugins/_security/api/roles/${ROLE_NAME}" \
+                -H "Content-Type: application/json" \
+                -d '{
+                  "cluster_permissions": ["cluster_composite_ops_ro"],
+                  "index_permissions": [{
+                    "index_patterns": ["sensor-data"],
+                    "allowed_actions": ["read", "search"]
+                  }]
+                }' \
+                --aws-sigv4 "aws:amz:${AWS_REGION}:es" \
+                -u : || echo "Role creation failed or already exists"
+              
+              echo "Mapping IRSA role to OpenSearch role..."
+              
+              # Map the backend role
+              curl -X PUT "${ENDPOINT}/_plugins/_security/api/rolesmapping/${ROLE_NAME}" \
+                -H "Content-Type: application/json" \
+                -d "{
+                  \"backend_roles\": [\"${IRSA_ROLE_ARN}\"]
+                }" \
+                --aws-sigv4 "aws:amz:${AWS_REGION}:es" \
+                -u : || echo "Role mapping failed or already exists"
+              
+              echo "OpenSearch security setup completed!"
+      {{- end }}
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
