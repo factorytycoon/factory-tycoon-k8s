@@ -1,5 +1,5 @@
 # Values for Production environment
-replicaCount: 2
+replicaCount: 1
 
 image:
   tag: "d6b3613fc6e0a1283e229a158d13e7a2de2831ba"
