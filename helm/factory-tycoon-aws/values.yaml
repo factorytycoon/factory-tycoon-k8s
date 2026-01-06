@@ -71,7 +71,7 @@ readinessProbe:
   periodSeconds: 5
 # OpenSearch Security Setup (initContainer)
 initContainers:
-  opensearch-security-setup:
+  opensearchSecuritySetup:
     enabled: true
     image: curlimages/curl:latest
     irsaRoleArn: "arn:aws:iam::613307913976:role/sf-backend-aws-irsa"
