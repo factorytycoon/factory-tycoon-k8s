@@ -2,7 +2,7 @@
 replicaCount: 2
 
 image:
-  tag: "3114bdb3064ef33c78c48541a16199234a255f32"
+  tag: "97ea20df1b526f144a348eae435ff659914115a2"
 
 # ConfigMap and Secret are managed by Terraform
 configMap:
