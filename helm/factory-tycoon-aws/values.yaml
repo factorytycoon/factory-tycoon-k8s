@@ -63,6 +63,13 @@ livenessProbe:
   initialDelaySeconds: 30
   periodSeconds: 10
 
+startupProbe:
+  httpGet:
+    path: /actuator/health
+    port: 8080
+  failureThreshold: 18
+  periodSeconds: 5
+
 readinessProbe:
   httpGet:
     path: /actuator/health
