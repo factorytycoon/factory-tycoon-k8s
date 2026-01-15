@@ -21,3 +21,33 @@ autoscaling:
   minReplicas: 2
   maxReplicas: 10
   targetCPUUtilizationPercentage: 80
+
+# Startup probe - 애플리케이션 초기 시작 시간 확보
+startupProbe:
+  httpGet:
+    path: /actuator/health
+    port: 8080
+  initialDelaySeconds: 30
+  periodSeconds: 10
+  timeoutSeconds: 5
+  failureThreshold: 30  # 최대 300초(5분) 동안 시작 대기
+
+# Liveness probe - 타임아웃 증가 및 체크 간격 조정
+livenessProbe:
+  httpGet:
+    path: /actuator/health
+    port: 8080
+  initialDelaySeconds: 10
+  periodSeconds: 15
+  timeoutSeconds: 10  # 타임아웃을 10초로 증가
+  failureThreshold: 3
+
+# Readiness probe - 트래픽 받을 준비 확인
+readinessProbe:
+  httpGet:
+    path: /actuator/health
+    port: 8080
+  initialDelaySeconds: 5
+  periodSeconds: 5
+  timeoutSeconds: 5
+  failureThreshold: 3
