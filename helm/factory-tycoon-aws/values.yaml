@@ -2,7 +2,7 @@
 replicaCount: 2
 
 image:
-  repository: 613307913976.dkr.ecr.ap-northeast-2.amazonaws.com/sf-backend-aws
+  repository: 809808214826.dkr.ecr.ap-northeast-2.amazonaws.com/sf-backend-aws
   pullPolicy: Always
   tag: "latest"
 
@@ -24,7 +24,7 @@ serviceAccount:
   create: true
   name: sf-backend-aws-sa
   annotations:
-    eks.amazonaws.com/role-arn: "arn:aws:iam::613307913976:role/sf-backend-aws-irsa"
+    eks.amazonaws.com/role-arn: "arn:aws:iam::809808214826:role/sf-backend-aws-irsa"
 
 configMap:
   enabled: false  # Managed by Terraform
@@ -83,4 +83,4 @@ initContainers:
   opensearchSecuritySetup:
     enabled: true
     image: curlimages/curl:latest
-    irsaRoleArn: "arn:aws:iam::613307913976:role/sf-backend-aws-irsa"
+    irsaRoleArn: "arn:aws:iam::809808214826:role/sf-backend-aws-irsa"
